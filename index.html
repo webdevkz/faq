@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dukascopy Help Center</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+
+    :root {
+      --dc-red: #c00;
+      --dc-border: #e8e8e8;
+      --search-bg: #FCF8FC;
+      --view-all-text: #11141A;
+      --text-main: #1a1a1a;
+      --text-muted: #666;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--text-main); line-height: 1.5; }
+
+    /* HEADER - 64px */
+    .dc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px; border-bottom: 1px solid var(--dc-border);
+      position: sticky; top: 0; background: #fff; z-index: 1000;
+    }
+    .dc-logo img { height: 24px; cursor: pointer; display: block; }
+    .dc-nav { display: flex; gap: 24px; }
+    .dc-nav a { text-decoration: none; color: var(--text-main); font-size: 14px; font-weight: 500; cursor: pointer; }
+    .dc-actions { display: flex; align-items: center; gap: 20px; }
+    .dc-btn-open { background: var(--dc-red); color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+    /* HERO */
+    .hc-hero { padding: 60px 24px 40px; text-align: center; }
+    .hc-hero h1 { font-size: 48px; font-weight: 500; margin-bottom: 32px; letter-spacing: -1px; }
+    .hc-search-wrapper { position: relative; max-width: 680px; margin: 0 auto; }
+    .hc-search-input { width: 100%; padding: 16px 24px 16px 52px; border: 1px solid var(--dc-border); border-radius: 40px; background: var(--search-bg); font-size: 16px; outline: none; }
+    .hc-search-wrapper svg { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #999; }
+
+    /* GRID & ADAPTATION */
+    .hc-container { max-width: 1240px; margin: 0 auto; padding: 0 24px 80px; }
+    .hc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; justify-items: center; }
+
+    @media (max-width: 1230px) { .hc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 820px) { .hc-grid { grid-template-columns: 1fr; } }
+
+    .hc-card { width: 384px; height: 314px; border: 1px solid var(--dc-border); border-radius: 16px; padding: 32px; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; }
+    .hc-card:hover { border-color: #bbb; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .hc-card h3 { font-size: 20px; margin-bottom: 16px; font-weight: 600; }
+    .hc-card ul { flex-grow: 1; overflow: hidden; }
+    .hc-card li { list-style: none; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hc-view-more { color: var(--view-all-text); font-size: 14px; font-weight: 600; margin-top: auto; display: flex; align-items: center; gap: 4px; }
+
+    /* SITEMAP TREE */
+    .hc-sitemap { margin-top: 80px; padding: 40px; background: #fcfcfc; border: 1px solid #eee; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #777; }
+    .hc-sitemap-title { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: #bbb; text-transform: uppercase; margin-bottom: 24px; letter-spacing: 1px; }
+    .hc-tree-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    @media (max-width: 900px) { .hc-tree-grid { grid-template-columns: 1fr; } }
+    .hc-tree-branch { margin-bottom: 24px; }
+    .hc-tree-root { color: #111; font-weight: 600; margin-bottom: 8px; display: block; }
+    .hc-tree-node { padding-left: 15px; border-left: 1px solid #e0e0e0; margin-left: 5px; position: relative; padding-bottom: 4px; }
+    .hc-tree-node::before { content: "├─"; position: absolute; left: 0; color: #ddd; }
+    .hc-tree-node:last-child::before { content: "└─"; }
+    .hc-tree-node:last-child { border-left: 1px solid transparent; }
+
+    /* CATEGORY VIEW */
+    .hc-flex-layout { display: flex; gap: 40px; }
+    .hc-sidebar { width: 260px; flex-shrink: 0; }
+    .hc-sidebar-box { border: 1px solid var(--dc-border); border-radius: 12px; overflow: hidden; }
+    .hc-sidebar-label { font-size: 12px; font-weight: 600; color: #999; text-transform: uppercase; padding: 16px 20px 8px; }
+    .hc-sidebar-item { display: block; padding: 10px 20px; font-size: 14px; color: #444; text-decoration: none; cursor: pointer; }
+    .hc-sidebar-item.active { color: var(--dc-red); font-weight: 600; background: #fffcfc; }
+    .hc-sidebar-divider { border-top: 1px solid var(--dc-border); margin-top: 8px; padding-top: 8px; }
+    .hc-sidebar-extra { padding: 10px 20px; font-size: 14px; color: #333; cursor: pointer; display: block; }
+
+    .hc-breadcrumbs { font-size: 14px; color: #999; margin-bottom: 32px; display: flex; align-items: center; gap: 8px; }
+    .hc-breadcrumbs span { cursor: pointer; }
+    .hc-breadcrumbs span:hover { color: var(--dc-red); }
+    .hc-breadcrumbs b { font-weight: 500; color: var(--text-main); }
+
+    .faq-group-container { margin-top: 40px; }
+    .faq-group-container:first-child { margin-top: 0; }
+    .faq-group-title { font-size: 12px; font-weight: 600; text-transform: uppercase; color: #999; border-bottom: 1px solid var(--dc-border); padding-bottom: 8px; margin-bottom: 12px; }
+    .faq-row { border-bottom: 1px solid var(--dc-border); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; padding: 18px 0; background: none; border: none; font-size: 16px; cursor: pointer; text-align: left; gap: 20px; }
+    .faq-icon { color: #ccc; font-size: 20px; }
+    .faq-row.open .faq-icon { transform: rotate(45deg); color: var(--dc-red); }
+    .faq-a { max-height: 0; overflow: hidden; transition: 0.3s ease; color: #555; font-size: 15px; }
+    .faq-row.open .faq-a { max-height: 1000px; padding-bottom: 20px; }
+
+    .still-help { text-align: center; margin-top: 60px; padding: 20px 0; }
+    .btn-contact { padding: 10px 24px; border: 1px solid #ccc; border-radius: 20px; background: #fff; cursor: pointer; font-weight: 500; font-family: inherit; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header class="dc-header">
+  <div style="display:flex; align-items:center; gap:40px;">
+    <div class="dc-logo" onclick="showHome()"><img src="https://www.dukascopy.com/media-storage/3568560685/o/" alt="Dukascopy"></div>
+    <nav class="dc-nav">
+      <a onclick="showHome()">Personal</a><a onclick="showHome()">Business</a><a onclick="showHome()">Pricing</a><a onclick="showHome()">Loyalty</a><a onclick="showHome()">Company</a>
+    </nav>
+  </div>
+  <div class="dc-actions">
+    <div style="font-size: 14px; font-weight: 600;">EN</div>
+    <a style="font-size:14px; font-weight:600; cursor:pointer;" onclick="showHome()">Sign in</a>
+    <a class="dc-btn-open" onclick="showHome()">Open account</a>
+  </div>
+</header>
+
+<div class="hc-hero">
+  <h1 id="heroTitle">How we can help?</h1>
+  <div class="hc-search-wrapper">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" class="hc-search-input" id="searchInput" placeholder="Search for articles" oninput="handleSearch(this.value)">
+  </div>
+</div>
+
+<div class="hc-container">
+  <div id="homeView">
+    <div class="hc-grid" id="homeGrid"></div>
+    <div class="still-help">
+      <p style="font-size: 20px; font-weight: 500; margin-bottom: 16px;">Still need help?</p>
+      <button class="btn-contact">Contact us</button>
+    </div>
+    <div class="hc-sitemap">
+      <div class="hc-sitemap-title">System Infrastructure / Category Tree</div>
+      <div class="hc-tree-grid" id="treeGrid"></div>
+    </div>
+  </div>
+
+  <div id="categoryView" class="hidden">
+    <div class="hc-flex-layout">
+      <aside class="hc-sidebar">
+        <div class="hc-sidebar-box">
+          <div class="hc-sidebar-label">Topics</div>
+          <div id="sideNavLinks"></div>
+          <div class="hc-sidebar-divider"></div>
+          <a class="hc-sidebar-extra">Customer feedback</a>
+          <a class="hc-sidebar-extra">Report an Issue</a>
+          <a class="hc-sidebar-extra">Contact us</a>
+        </div>
+      </aside>
+      <main style="flex:1">
+        <div class="hc-breadcrumbs"><span onclick="showHome()">Help Center</span> – <b id="breadCurrent"></b></div>
+        <div id="faqContent"></div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+  {
+    title: "Getting started",
+    groups: [
+      { title: "Multi-Currency Account", questions: ["What is a Multi-Currency Account?", "Is Dukascopy a bank?", "What countries are supported?", "What are the opening and maintenance fees?", "How can I use a Multi-Currency Account?", "What currencies are supported?"] },
+      { title: "Account opening", questions: ["How to open Multi-Currency Account?", "How long does it take to open an account?", "What documents are needed for account opening?", "What to do if I made a mistake in a registration form?", "What to do if I closed registration form without completing it?", "What is video-identification?", "How to pass video-identification?", "In what languages video-identification can be passed?", "What to do if video-identification was not completed successfully?", "What to do after completing video-identification?", "How to open trading account?", "If Dukascopy Bank requires me to provide an original certified copy of an identification document, how can I get such certified document?"] }
+    ]
+  },
+  {
+    title: "My account",
+    groups: [
+      { title: "My account", questions: ["How to access Multi-Currency Account?", "What if I forgot my password?", "How to change my password?", "How to change personal data?", "What is an account statement? Where to find it?", "What is the difference between account statement and history?", "What does VIP status mean?", "What basic security rules do I need to know?"] },
+      { title: "Account limits", questions: ["What is the Incoming quarterly limit?", "What is my quarterly incoming limit and how can I increase it?", "What documents are required to increase the quarterly incoming limit?", "Is it possible to accept a deposit out the quarterly incoming limit?"] },
+      { title: "Referral program", questions: ["What is the essence of the referral program?", "Where can I find my referral code?", "Where should I enter the referral code?", "What to do if there is no field for entering the referral code?", "When will I receive a reward for inviting a friend?", "Where can I view my referral program statistics?"] },
+      { title: "Dukascopy Connect 911", questions: ["What is Dukascopy Connect 911?", "How to change the language?", "What to do if I was banned in the application?", "How to send money to other user?"] }
+    ]
+  },
+  {
+    title: "Payment operations",
+    groups: [
+      { title: "General information", questions: ["What payment methods does Multi-Currency Account support?", "How long does processing of payment take?", "Does account support third party payments?", "What are the fees for deposit / withdrawal?", "What currencies are supported?"] },
+      { title: "Bank transfer", questions: ["Where to find payment details to make bank deposit?", "What information is required to make bank withdrawal?", "How to make wire transfer in Russian rubles?", "Is it necessary to indicate corresponding bank when making a bank transfer?", "How can I get a copy of SWIFT message?", "What are SEPA / SIX transfers?", "Is it possible to cancel wire withdrawal?", "How long does it take to receive wire transfer?", "What are the commissions for wire transfers?", "What is the difference between SHA and OUR commissions?"] },
+      { title: "Saved cards", questions: ["What does saved card mean?", "How to link payment card to Multi-Currency Account?", "Why my card is pending?", "Why I cannot link my card?"] },
+      { title: "Payment service providers", questions: ["Western Union withdrawal", "What are Skrill and Neteller?", "How to start transferring funds to / from Skrill and Neteller?", "In which currencies I can make Skrill, Neteller transfers?", "How to withdraw funds from PayPal to Multi-Currency Account?", "Is it possible to link Multi-Currency Account to PayPal?", "How to link Dukascopy card to PayPal?"] },
+      { title: "Instant money transfers", questions: ["What are instant money transfers?", "How to transfer funds to other Multi-Currency Account holder?"] },
+      { title: "Trading accounts", questions: ["How to transfer funds to my other accounts with Dukascopy Bank?", "How to transfer funds to trading account with Dukascopy Europe?"] }
+    ]
+  },
+  {
+    title: "Payment cards",
+    groups: [
+      { title: "General information", questions: ["What is a Dukascopy Card by Corner?", "What is a Dukascopy Card by CBH?", "What is a Walletto card?", "What is a Swiss Bankers card?", "What is a Moorwand card?", "Payment cards comparison", "What is the difference between virtual and plastic cards?"] },
+      { title: "Order and delivery", questions: ["How to order a card?", "How many cards can I order?", "Are there any geographical restrictions?", "How long does card delivery take?", "Can I order my card to a different address?", "Can you send my card by a courier?", "How can I track my card delivery?"] },
+      { title: "Activation and usage", questions: ["What are card fees and limits?", "Are there any restrictions?", "How can I activate and top up my card?", "Can I add my card to Apple Pay wallet?", "Can I use contactless payments?", "Where can I find my card statement?"] },
+      { title: "Security", questions: ["Is my card 3D secure?", "Where can I find my card's PIN?", "What should I do if my card was lost or stolen?", "How can I block my card?"] },
+      { title: "Common issues", questions: ["I have not received my card. What should I do?", "I have not received SMS during 3D secure authentication?", "My card payment has been declined. What should I do?", "My card payment is in pending status. What does it mean?", "ATM captured my card. What should I do?", "I want to dispute a transaction. What should I do?", "My card was blocked. Why?", "Why is my card balance negative?", "I believe I was charged an additional fee when making a payment. Why?"] }
+    ]
+  },
+  {
+    title: "Private Banking & Investments",
+    groups: [
+      { title: "Private Banking Account", questions: ["What is a Private Banking Account?", "What are benefits and discounts?", "How to apply?", "What is a minimum/maximum deposit size?"] },
+      { title: "Investments", questions: ["What the offered investments are?", "Do I become a direct owner of the acquired assets?", "What is CFD? What are its advantages?", "What do I need to buy an asset?", "What is an investment reference currency?", "How to change reference currency?", "What can I do with acquired assets?", "How Profit / Loss is calculated?", "Are there any limits applied to operations with investments?", "Are there any fees charged for operations with investments?", "Am I entitled to receive dividends as an investor?", "What are investment adjustments?", "What is investment delivery?", "What is a blockchain investment deposit?"] }
+    ]
+  },
+  {
+    title: "Crypto",
+    groups: [
+      { title: "Partner Account", questions: ["Can Multi-Currency Account holders acquire crypto assets?", "What is the list of recognized crypto exchanges?", "How to start operating on crypto exchanges?", "How to deposit funds on my account with crypto exchange?", "How to acquire crypto assets?", "How to unlink from a crypto-exchange?"] },
+      { title: "Crypto Lending/Borrowing", questions: ["What is Crypto Lending solution?", "How does Crypto Lending solution work?", "What are advantages of Crypto Lending program?", "What are the steps for using Crypto Lending program?", "How can I access my funds using Crypto Lending program?", "Where can I find Crypto Lending calculator?"] },
+      { title: "Dukascoins: General", questions: ["What is Dukascoin?", "What are the fees for operations with Dukascoins?", "What can I do with Dukascoins?", "How to earn Dukascoins?", "Who are Fat Catz?", "Who are Big Fish?"] },
+      { title: "Dukascoins: Operations", questions: ["How to buy / sell Dukascoin on the Marketplace?", "How to withdraw Dukascoins to blockchain?", "How to deposit Dukascoins from blockchain?", "How to send Dukascoins to other Multi-Currency Account?"] },
+      { title: "Dukascoins: Common Issues", questions: ["Why am I not able to create an order on Marketplace?", "Why I cannot buy / sell Dukascoins on the Marketplace?", "How to find Dukascoins in the blockchain wallet?"] }
+    ]
+  }
+];
+
+function init() {
+  const grid = document.getElementById('homeGrid');
+  grid.innerHTML = data.map((cat, i) => `
+    <div class="hc-card" onclick="showCategory(${i})">
+      <h3>${cat.title}</h3>
+      <ul>${cat.groups[0].questions.slice(0, 4).map(q => `<li>${q}</li>`).join('')}</ul>
+      <div class="hc-view-more">View all <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </div>
+  `).join('');
+
+  const tree = document.getElementById('treeGrid');
+  tree.innerHTML = data.map(cat => `
+    <div class="hc-tree-branch">
+      <span class="hc-tree-root">${cat.title}</span>
+      ${cat.groups.map(g => `<div class="hc-tree-node">${g.title}</div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function showCategory(idx) {
+  document.getElementById('homeView').classList.add('hidden');
+  document.getElementById('categoryView').classList.remove('hidden');
+  document.getElementById('heroTitle').textContent = data[idx].title;
+  document.getElementById('breadCurrent').textContent = data[idx].title;
+  renderNav(idx);
+  const content = document.getElementById('faqContent');
+  content.innerHTML = data[idx].groups.map(group => `
+    <div class="faq-group-container">
+      <div class="faq-group-title">${group.title}</div>
+      ${group.questions.map(q => `
+        <div class="faq-row">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span>${q}</span><span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Answer for "${q}" goes here.</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+  window.scrollTo(0,0);
+}
+
+function renderNav(activeIdx) {
+  const nav = document.getElementById('sideNavLinks');
+  nav.innerHTML = data.map((cat, i) => `
+    <a class="hc-sidebar-item ${i === activeIdx ? 'active' : ''}" onclick="showCategory(${i})">${cat.title}</a>
+  `).join('');
+}
+
+function showHome() {
+  document.getElementById('homeView').classList.remove('hidden');
+  document.getElementById('categoryView').classList.add('hidden');
+  document.getElementById('heroTitle').textContent = "How we can help?";
+  init();
+  window.scrollTo(0,0);
+}
+
+function handleSearch(val) {
+  if (!val.trim()) { showHome(); return; }
+  const results = [];
+  data.forEach((cat, i) => {
+    cat.groups.forEach(g => {
+      g.questions.forEach(q => { if(q.toLowerCase().includes(val.toLowerCase())) results.push({q, i}) });
+    });
+  });
+  const grid = document.getElementById('homeGrid');
+  showHome();
+  grid.innerHTML = results.length ? results.slice(0,12).map(r => `
+    <div class="hc-card" onclick="showCategory(${r.i})"><h3>${r.q}</h3></div>
+  `).join('') : `<p style="grid-column:1/-1; color:#999; padding:20px;">No results found.</p>`;
+}
+
+init();
+</script>
+</body>
+</html>
