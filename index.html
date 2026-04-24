@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +73,8 @@
     .hc-sidebar-item { display: block; padding: 10px 20px; font-size: 14px; color: #444; text-decoration: none; cursor: pointer; }
     .hc-sidebar-item.active { color: var(--dc-red); font-weight: 600; background: #fffcfc; }
     .hc-sidebar-divider { border-top: 1px solid var(--dc-border); margin-top: 8px; padding-top: 8px; }
-    .hc-sidebar-extra { padding: 10px 20px; font-size: 14px; color: #333; cursor: pointer; display: block; }
+    .hc-sidebar-extra { padding: 10px 20px; font-size: 14px; color: #333; text-decoration: none; display: block; cursor: pointer; }
+    .hc-sidebar-extra:hover { color: var(--dc-red); }
 
     .hc-breadcrumbs { font-size: 14px; color: #999; margin-bottom: 32px; display: flex; align-items: center; gap: 8px; }
     .hc-breadcrumbs span { cursor: pointer; }
@@ -90,7 +92,7 @@
     .faq-row.open .faq-a { max-height: 1000px; padding-bottom: 20px; }
 
     .still-help { text-align: center; margin-top: 60px; padding: 20px 0; }
-    .btn-contact { padding: 10px 24px; border: 1px solid #ccc; border-radius: 20px; background: #fff; cursor: pointer; font-weight: 500; font-family: inherit; }
+    .btn-contact { padding: 10px 24px; border: 1px solid #ccc; border-radius: 20px; background: #fff; cursor: pointer; font-weight: 500; font-family: inherit; color: inherit; text-decoration: none; display: inline-block; }
     .hidden { display: none !important; }
   </style>
 </head>
@@ -123,7 +125,7 @@
     <div class="hc-grid" id="homeGrid"></div>
     <div class="still-help">
       <p style="font-size: 20px; font-weight: 500; margin-bottom: 16px;">Still need help?</p>
-      <button class="btn-contact">Contact us</button>
+      <a href="https://www.dukascopy.bank/contact/" class="btn-contact">Contact us</a>
     </div>
     <div class="hc-sitemap">
       <div class="hc-sitemap-title">System Infrastructure / Category Tree</div>
@@ -138,9 +140,9 @@
           <div class="hc-sidebar-label">Topics</div>
           <div id="sideNavLinks"></div>
           <div class="hc-sidebar-divider"></div>
-          <a class="hc-sidebar-extra">Customer feedback</a>
-          <a class="hc-sidebar-extra">Report an Issue</a>
-          <a class="hc-sidebar-extra">Contact us</a>
+          <a href="https://www.dukascopy.bank/contact/" class="hc-sidebar-extra">Customer feedback</a>
+          <a href="https://www.dukascopy.bank/contact/" class="hc-sidebar-extra">Report an Issue</a>
+          <a href="https://www.dukascopy.bank/contact/" class="hc-sidebar-extra">Contact us</a>
         </div>
       </aside>
       <main style="flex:1">
@@ -200,8 +202,7 @@ const data = [
   {
     title: "Crypto",
     groups: [
-      { title: "Partner Account", questions: ["Can Multi-Currency Account holders acquire crypto assets?", "What is the list of recognized crypto exchanges?", "How to start operating on crypto exchanges?", "How to deposit funds on my account with crypto exchange?", "How to acquire crypto assets?", "How to unlink from a crypto-exchange?"] },
-      { title: "Crypto Lending/Borrowing", questions: ["What is Crypto Lending solution?", "How does Crypto Lending solution work?", "What are advantages of Crypto Lending program?", "What are the steps for using Crypto Lending program?", "How can I access my funds using Crypto Lending program?", "Where can I find Crypto Lending calculator?"] },
+      { title: "Crypto operations", questions: ["Can Multi-Currency Account holders acquire crypto assets?", "What is the list of recognized crypto exchanges?", "How to start operating on crypto exchanges?", "How to deposit funds on my account with crypto exchange?", "How to acquire crypto assets?", "How to unlink from a crypto-exchange?", "What is Crypto Lending solution?", "How does Crypto Lending solution work?", "What are advantages of Crypto Lending program?", "What are the steps for using Crypto Lending program?", "How can I access my funds using Crypto Lending program?", "Where can I find Crypto Lending calculator?"] },
       { title: "Dukascoins: General", questions: ["What is Dukascoin?", "What are the fees for operations with Dukascoins?", "What can I do with Dukascoins?", "How to earn Dukascoins?", "Who are Fat Catz?", "Who are Big Fish?"] },
       { title: "Dukascoins: Operations", questions: ["How to buy / sell Dukascoin on the Marketplace?", "How to withdraw Dukascoins to blockchain?", "How to deposit Dukascoins from blockchain?", "How to send Dukascoins to other Multi-Currency Account?"] },
       { title: "Dukascoins: Common Issues", questions: ["Why am I not able to create an order on Marketplace?", "Why I cannot buy / sell Dukascoins on the Marketplace?", "How to find Dukascoins in the blockchain wallet?"] }
