@@ -65,10 +65,15 @@
     .hc-tree-node:last-child::before { content: "└─"; }
     .hc-tree-node:last-child { border-left: 1px solid transparent; }
 
-    /* CATEGORY VIEW */
-    .hc-flex-layout { display: flex; gap: 40px; }
-    .hc-sidebar { width: 260px; flex-shrink: 0; }
-    .hc-sidebar-box { border: 1px solid var(--dc-border); border-radius: 12px; overflow: hidden; }
+    /* CATEGORY VIEW & STICKY SIDEBAR */
+    .hc-flex-layout { display: flex; gap: 40px; align-items: flex-start; }
+    .hc-sidebar { 
+      width: 260px; 
+      flex-shrink: 0; 
+      position: sticky; 
+      top: 100px; /* Прилипает с отступом сверху */
+    }
+    .hc-sidebar-box { border: 1px solid var(--dc-border); border-radius: 12px; overflow: hidden; background: #fff; }
     .hc-sidebar-label { font-size: 12px; font-weight: 600; color: #999; text-transform: uppercase; padding: 16px 20px 8px; }
     .hc-sidebar-item { display: block; padding: 10px 20px; font-size: 14px; color: #444; text-decoration: none; cursor: pointer; }
     .hc-sidebar-item.active { color: var(--dc-red); font-weight: 600; background: #fffcfc; }
